@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div id="demo">
+<h2>The XMLHttpRequest Object</h2>
+<button type="button" onclick="loadDoc(event)">Change Content</button>
+</div>
+
+<script>
+function loadDoc(event) {
+  var req= new XMLHttpRequest();
+  event.preventDefault();
+  req.open("GET","http://localhost:3000/employee",true);
+  req.send();
+  console.log("Got Connected");
+    req.onreadystatechange=function()
+    {
+        if(this.readystate==4)
+        {
+          var res=this.response;
+          var records=JSON.parse(res);
+          console.log(records);
+          var str="<ul>";
+          records.forEach((rec)=> {
+
+            str+=` <li> id is ${rec.id} : Name is ${rec.name} </li>`;
+            
+          });
+          str+="</ul>";
+          document.getElementById("demo").innerHTML=str;
+        }
+    }
+  }
+</script>
+
+</body>
+</html>
